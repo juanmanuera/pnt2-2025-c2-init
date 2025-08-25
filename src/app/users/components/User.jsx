@@ -1,6 +1,8 @@
 import "./user.css";
 
 export default function User({user}){
+    // Aca todo el codigo de javascript 
+    // Lo que sigue a continuación es JSX
     return (
         <li key={user.id} className="user-item">
         <div className="user-content">
@@ -13,7 +15,7 @@ export default function User({user}){
                     <div className="user-email">{user.email}</div>
                 </div>
             </div>
-        </div>
+        </div>        
         </li>
     )
 }
