@@ -13,12 +13,26 @@ export default function User({user}){
         <div className="user-content">
             <div className="user-info">
                 <div className="user-avatar">
-                    <img src={`/img/${user.avatar}`} alt={`Foto de ${user.name}`} className="user-image" />
+                    <img src={user.avatar} alt={`Foto de ${user.name}`} className="user-image" />
                 </div>
                 <div className="user-details">
                     <div className="user-name">{user.name}</div>
                     <div className="user-email">{user.email}</div>
                 </div>
+            </div>
+            <div className="user-status-container">
+                <span className={`user-status 
+                    ${user.status === 'registered' && 'status-registered' } 
+                    ${user.status === 'in_progress' && 'status-in-progress' } 
+                    ${user.status === 'completed' && 'status-completed' }
+                    ${user.status === 'failed' && 'status-failed'}
+                    `}
+                >
+                    {user.status === 'registered' && 'Registrado' }
+                    {user.status === 'in_progress' && 'En Progreso' }
+                    {user.status === 'completed' && 'Completado' }
+                    {user.status === 'failed' && 'No aprobado' }
+                </span>
             </div>
         </div>        
         </li>

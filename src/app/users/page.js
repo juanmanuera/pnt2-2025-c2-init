@@ -5,7 +5,6 @@ import {useState, useEffect} from 'react';
 //import { users } from "../data/mocs";
 
 export default function UsersPage(){
-    // TODO: Obtener los usuarios desde un API
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -23,7 +22,9 @@ export default function UsersPage(){
                 setLoading(false);               
             }
         };        
-        fetchUsers();
+        setTimeout(() => {
+             fetchUsers();
+        }, 2000);       
     }, []);
 
     return (        
