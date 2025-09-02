@@ -1,4 +1,5 @@
 import "./user.css";
+import Link from "next/link";
 
 export default function User({user}){
     // Aca todo el codigo de javascript 
@@ -12,9 +13,11 @@ export default function User({user}){
         <li key={user.id} className="user-item">
         <div className="user-content">
             <div className="user-info">
-                <div className="user-avatar">
-                    <img src={user.avatar} alt={`Foto de ${user.name}`} className="user-image" />
-                </div>
+                <Link href={`/users/${user.id}`}>
+                    <div className="user-avatar">
+                        <img src={user.avatar} alt={`Foto de ${user.name}`} className="user-image" />
+                    </div>
+                </Link>
                 <div className="user-details">
                     <div className="user-name">{user.name}</div>
                     <div className="user-email">{user.email}</div>
