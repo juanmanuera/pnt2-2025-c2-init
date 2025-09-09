@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import '../auth.css';
+import { routerServerGlobal } from 'next/dist/server/lib/router-utils/router-server-context';
 
 export default function SignupPage()
 {
+    const router = useRouter();
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
-        user: '',
+        name: '',
         email: '',
         password: ''
     });
@@ -20,10 +22,37 @@ export default function SignupPage()
         e.preventDefault();
         setIsLoading(true);
         setError('');
+
+        try {
+            const response = await fetch('https://tp2-backend-htarb0a8gqazcmfh.eastus2-01.azurewebsites.net/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                     name: formData.name,
+                     email: formData.email,
+                     password: formData.password
+                 })
+            });
+            if (!response.ok) { 
+                const data = await response.json();
+                throw new Error(data.message || 'Error en el registro');
+            }
+            const data = await response.json();
+            router.push('/login');
+            
+        } catch (error) {
+            setError(error.message);
+        }
+        finally {
+            setIsLoading(false);
+        }
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(name, value);
         setFormData((prevData) => ({
             ...prevData,
             [name]: value
@@ -53,12 +82,12 @@ export default function SignupPage()
               <label htmlFor="user" className="sr-only">Nombre de usuario</label>
               <input
                 id="user"
-                name="user"
+                name="name"
                 type="text"
                 required
                 className="input-field top"
                 placeholder="Nombre de usuario"
-                value={formData.user}
+                value={formData.name}
                 onChange={handleChange}
                 disabled={isLoading}
               />
@@ -109,7 +138,7 @@ export default function SignupPage()
         <div className="text-center">
           <p className="text-sm text-gray-600">
             ¿Ya tienes una cuenta?{' '}
-            <a href="/login" className="link">
+            <a href="/auth/login" className="link">
               Inicia sesión
             </a>
           </p>
